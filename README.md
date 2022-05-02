@@ -28,8 +28,6 @@ Cliente
 
 Información adicional de los participantes:
 
-   Nombre        Correo institucional        Github
-¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
  - Helena        (alu0101398662)             HelenaEsp 
  - Eva           (alu0101237053)             blank
  - Adrián        (alu0101404813)             Adrian-glz01 
