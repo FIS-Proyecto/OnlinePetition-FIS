@@ -22,10 +22,6 @@ Cliente
 ¯¯¯¯¯¯¯
 - Helena
 
-
-
-
-
 Información adicional de los participantes:
 
  - Helena        (alu0101398662)             HelenaEsp 
