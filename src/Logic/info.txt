@@ -1,0 +1,2 @@
+In this folder will be the source code for the logical part of the proyect like
+credential verification, managin UI, etc.
