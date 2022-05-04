@@ -1,3 +1,6 @@
+#ifndef __DB_h__
+#define __DB_h__
+
 #include <iostream>
 #include <variant>
 #include <tuple>
@@ -19,13 +22,16 @@ struct query_helper {
 
 typedef std::string Petition;
 
-const std::string database = "database.db";
+const std::string database = "/home/julio/Desktop/OnlinePetition-FIS/doc/database.db";
 
 namespace db {
   // database classes
   class filehandler {
    public:
-    filehandler(query_helper qr);
+    filehandler(query_helper qr); //get
+    filehandler(query_helper qr, std::string thingToEdit); // edit
+    filehandler(query_helper qr, std::string thingToAdd); // add
+    filehandler(query_helper qr, std::string thingToDel); // del
     ~filehandler();
     bool result_ = false;
     std::variant<user, Petition> data_;
@@ -34,7 +40,7 @@ namespace db {
     std::fstream file_;
     query_helper::type action_;
 
-    template<typename Type_> 
+    template<typename Type_>
              std::tuple<Type_, bool> get(std::string ID);
                                 bool add();
                                 bool del();
@@ -44,4 +50,14 @@ namespace db {
     user wrapUser(std::string line);
   };
 
+  class query {
+   public:
+    query(query_helper qr);
+    ~query();
+    
+   private:
+  };
 };
+
+
+#endif

@@ -1,5 +1,5 @@
-#include "db.h"
-#include "tools.h"
+#include "/home/julio/Desktop/OnlinePetition-FIS/include/DataBase/db.h"
+#include "/home/julio/Desktop/OnlinePetition-FIS/include/Logic/tools.h"
 
 db::filehandler::filehandler(query_helper qr) {
 
@@ -80,6 +80,7 @@ bool db::filehandler::edit() {
 user db::filehandler::wrapUser(std::string line) {
   std::stringstream ss(line);
   std::string segment, name, uid, email, passwd;
+  size_t account_type;
 
   std::getline(ss, segment, ';');
   uid = segment;
@@ -89,8 +90,7 @@ user db::filehandler::wrapUser(std::string line) {
   email = segment;
   std::getline(ss, segment, ';');
   passwd = segment;
-  return user(name, email, passwd, uid);
+  std::getline(ss, segment, ';');
+  account_type = std::stoi(segment);
+  return user(name, email, passwd, uid, account_type);
 }
-
-
-
