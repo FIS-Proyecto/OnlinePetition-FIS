@@ -1,5 +1,7 @@
 #include "/home/julio/Desktop/OnlinePetition-FIS/include/DataBase/db.h"
 
+using namespace db;
+
 user::user() = default;
 user::user(std::string name, std::string email, std::string passwd, size_t account_type) : 
           passwd_(passwd), 

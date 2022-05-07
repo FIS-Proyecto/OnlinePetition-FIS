@@ -1,96 +1,322 @@
 #include "/home/julio/Desktop/OnlinePetition-FIS/include/DataBase/db.h"
-#include "/home/julio/Desktop/OnlinePetition-FIS/include/Logic/tools.h"
+// #include "/home/julio/Desktop/OnlinePetition-FIS/include/Logic/tools.h"
 
-db::filehandler::filehandler(query_helper qr) {
+using namespace db;
 
-  try {
-    file_.open(database, std::fstream::in | std::fstream::out | std::fstream::app);
-  } catch (std::exception e) {
-    std::cout << "Error while opening database: " << e.what() << std::endl;
+void deleteEmptyLinesFile(std::string file_path) {
+  std::ifstream file(file_path);
+  std::string line;
+  std::ofstream temp_file("empty_lines.txt");
+  while (getline(file, line)) {
+    if(line.empty()) {
+      continue;
+    }
+    temp_file << line << std::endl;
+  }
+  temp_file.close();
+  file.close();
+  remove(file_path.c_str());
+  rename("empty_lines.txt", file_path.c_str());
+  remove("empty_lines.txt");
+}
+
+//get user/petition by id
+
+filehandler::filehandler(query_type qr, std::string ID, data_t dt_ty) {
+  if(qr != query_type::get && qr != query_type::del) {
+    throw std::invalid_argument("Invalid action type with incorrect arguments");
+    exit(EXIT_SUCCESS);
   }
 
-  switch (qr.action_t) {
-    case query_helper::type::add:
-      result_ = this->add();
+  switch(dt_ty) {
+    case data_t::user:
+      try {
+        file_.open(users_database, std::fstream::in | std::fstream::out | std::fstream::app);
+      } catch (std::exception e) {
+        std::cout << "Error while opening database: " << e.what() << std::endl;
+      }
+      if (qr == query_type::get) this->get<db::user>(ID);
+      if (qr == query_type::del) this->del(ID, users_database);
       break;
-    case query_helper::type::del:
-      result_ = this->del();
-      break;
-    case query_helper::type::edit:
-      this->edit();
-      break;
-    case query_helper::type::get: 
-    {
-      auto[data_tpl, result_tpl] = this->get<user>(qr.ID);
-      data_ = data_tpl;
-      result_ = result_tpl;
-    }
-      // if(std::holds_alternative<user>(data_))
-      //   std::cout << std::get<user>(data_) << std::endl;
-      // else if(std::holds_alternative<Petition>(data_))
-      //   std::cout << std::get<Petition>(data_) << std::endl;
+    case data_t::petition:
+      try {
+        file_.open(petitions_database, std::fstream::in | std::fstream::out | std::fstream::app);
+      } catch (std::exception e) {
+        std::cout << "Error while opening database: " << e.what() << std::endl;
+      }
+      if (qr == query_type::get) this->get<db::petition>(ID);
+      if (qr == query_type::del) this->del(ID, petitions_database);
       break;
     default:
-      result_ = false;
-      break;
+      throw std::invalid_argument("Invalid data type");
+      exit(EXIT_SUCCESS);
   }
 }
 
-db::filehandler::~filehandler() {
+filehandler::filehandler(query_type qr, std::string ID, db_edit::user edit_usr) {
+  if(qr != query_type::edit) {
+    throw std::invalid_argument("Invalid action type with incorrect arguments");
+    exit(EXIT_SUCCESS);
+  }
+
+  try {
+    file_.open(users_database, std::fstream::in | std::fstream::out | std::fstream::app);
+  } catch (std::exception e) {
+    std::cout << "Error while opening users database: " << e.what() << std::endl;
+  }
+
+  this->edit(ID, edit_usr);
+}
+
+filehandler::filehandler(query_type qr, std::string ID, db_edit::petition edit_petit) {
+  if(qr != query_type::edit) {
+    throw std::invalid_argument("Invalid action type with incorrect arguments");
+    exit(EXIT_SUCCESS);
+  }
+
+  try {
+    file_.open(petitions_database, std::fstream::in | std::fstream::out | std::fstream::app);
+  } catch (std::exception e) {
+    std::cout << "Error while opening users database: " << e.what() << std::endl;
+  }
+
+  this->edit(ID, edit_petit);
+}
+
+filehandler::filehandler(query_type qr, user add_usr) {
+  if(qr != query_type::add && qr != query_type::del) {
+    throw std::invalid_argument("Invalid action type with incorrect arguments");
+    exit(EXIT_SUCCESS);
+  }
+
+  try {
+    file_.open(users_database, std::fstream::in | std::fstream::out | std::fstream::app);
+  } catch (std::exception e) {
+    std::cout << "Error while opening users database: " << e.what() << std::endl;
+  }
+
+  this->add<db::user>(add_usr);
+}
+
+filehandler::filehandler(query_type qr, petition add_petit) {
+  if(qr != query_type::add && qr != query_type::del) {
+    throw std::invalid_argument("Invalid action type with incorrect arguments");
+    exit(EXIT_SUCCESS);
+  }
+
+  try {
+    file_.open(petitions_database, std::fstream::in | std::fstream::out | std::fstream::app);
+  } catch (std::exception e) {
+    std::cout << "Error while opening users database: " << e.what() << std::endl;
+  }
+
+  this->add<db::petition>(add_petit);
+}
+
+
+filehandler::~filehandler() {
   file_.close();
 }
 
 template<typename Type_>
-std::tuple<Type_, bool> db::filehandler::get(std::string ID) {
-  size_t line_inx = 1;
+void filehandler::get(std::string ID) {
   std::string line;
-  if(typeid(Type_) == typeid(user)) { 
+  if(typeid(Type_) == typeid(db::user)) { 
     while (getline(file_, line)) {
-      if(line_inx == 50) {
-        return std::forward_as_tuple(user(), false);
-        break;
-      }
       if (line.find(ID) != std::string::npos) {
-        std::stringstream ss(line);
-        return std::forward_as_tuple(this->wrapUser(line), true);
+        data_ = line;
+        result_ = true;
+        return;
       }
-      ++line_inx;
     }
+    throw std::invalid_argument("'get' -> user ID '" + ID + "' doesnt exist");
   }
-  if(typeid(Type_) == typeid(Petition)) { 
-    tools::GotoLine(file_, 50);
+  if(typeid(Type_) == typeid(petition)) { 
+    while (getline(file_, line)) {
+      if (line.find(ID) != std::string::npos) {
+        data_ = line;
+        result_ = true;
+        return;
+      }
+    }
+    throw std::invalid_argument("'get' -> petition ID '" + ID + "' doesnt exist");
   }
-  return std::forward_as_tuple(user(), true);
+  data_ = "ERROR";
+  result_ = false;
 }
 
-bool db::filehandler::add() {
-  return false;
+template<typename Type_>
+void filehandler::add(Type_ data) {
+  std::string line, search_id, data_id;
+  std::string search;
+  line << data;
+  std::stringstream data_ss(line);
+  std::getline(data_ss, data_id, ';');
+  while (getline(file_, line)) {
+      std::stringstream search_ss(line);
+      std::getline(search_ss, search_id, ';');
+      if(search_id == data_id) {
+        std::string t_d;
+        if(typeid(Type_) == typeid(petition)) t_d = "petition";
+        if(typeid(Type_) == typeid(user)) t_d = "user";
+        result_ = false;
+        throw std::invalid_argument("'add' -> " + t_d + " ID already exists");
+        return;
+      }
+  }
+  file_.clear();
+  file_.seekg(0, std::ios::beg);
+  file_ << "\n" << data;
+  result_ = true;
+  return;
 }
 
-bool db::filehandler::del() {
-  return false;
+void filehandler::del(std::string ID, std::string db_name) {
+  std::string line, search_id;
+  std::ofstream temp_file;
+
+  std::ofstream temp;
+  temp.open("temp.txt");
+
+  bool found;
+
+  while (getline(file_, line)) {
+    std::stringstream search_ss(line);
+    std::getline(search_ss, search_id, ';');
+    if(search_id == ID) {
+      data_ = "deleted";
+      result_ = true;
+      found = true;
+      continue;
+    }
+    temp << line << std::endl;
+  }
+  deleteEmptyLinesFile("temp.txt");
+  temp.close();
+  file_.close();
+  remove(db_name.c_str());
+  rename("temp.txt", db_name.c_str());
+  remove("temp.txt");
+
+  if(!found) {
+    result_ = false;
+    throw std::invalid_argument("'del' -> ID not found in " + db_name);
+    return;
+  }
 }
 
-bool db::filehandler::edit() {
-  return false;
+void filehandler::edit(std::string ID, db_edit::user edit_usr) {
+  std::string line, search_id;
+  std::ofstream temp;
+  bool found;
+  temp.open("temp.txt");
+  while (getline(file_, line)) {
+    std::stringstream search_ss(line);
+    std::getline(search_ss, search_id, ';');
+    if(search_id == ID) {
+      std::string uid, name, email, passwd, acc_t;
+      uid = search_id;
+      std::getline(search_ss, name, ';');
+      std::getline(search_ss, email, ';');
+      std::getline(search_ss, passwd, ';');
+      std::getline(search_ss, acc_t, ';');
+      
+      if(!edit_usr.UID_.empty()) {
+        uid = edit_usr.UID_;
+      }
+      if(!edit_usr.name_.empty()) {
+        name = edit_usr.name_;
+      }
+      if(!edit_usr.email_.empty()) {
+        email = edit_usr.email_;
+      }
+      if(!edit_usr.passwd_.empty()) {
+        passwd = edit_usr.passwd_;
+      }
+      if(!edit_usr.account_type_.empty()) {
+        acc_t = edit_usr.account_type_;
+      }
+      line = uid + ";" + name + ";" + email + ";" + passwd + ";" + acc_t;
+      found = true;
+      result_ = true;
+      data_ = "edited";
+    }
+    temp << line << std::endl;
+  }
+  deleteEmptyLinesFile("temp.txt");
+  temp.close();
+  file_.close();
+  remove(users_database.c_str());
+  rename("temp.txt", users_database.c_str());
+  remove("temp.txt");
+
+  if(!found) {
+    result_ = false;
+    throw std::invalid_argument("'edit' -> user ID not found");
+    return;
+  }
 }
 
-//tools
+void filehandler::edit(std::string ID, db_edit::petition edit_petit) {
+  std::string line, search_id;
+  std::ofstream temp;
+  bool found;
+  temp.open("temp.txt");
+  while (getline(file_, line)) {
+    std::stringstream search_ss(line);
+    std::getline(search_ss, search_id, ';');
+    if(search_id == ID) {
+      std::string pid, title, description, author, author_uid, date, nSigns, tags;
+      pid = search_id;
+      std::getline(search_ss, title, ';');
+      std::getline(search_ss, description, ';');
+      std::getline(search_ss, author, ';');
+      std::getline(search_ss, author_uid, ';');
+      std::getline(search_ss, date, ';');
+      std::getline(search_ss, nSigns, ';');
+      std::getline(search_ss, tags, ';');
 
-user db::filehandler::wrapUser(std::string line) {
-  std::stringstream ss(line);
-  std::string segment, name, uid, email, passwd;
-  size_t account_type;
+      if(!edit_petit.pid_.empty()) {
+        pid = edit_petit.pid_;
+      }
+      if(!edit_petit.title_.empty()) {
+        title = edit_petit.title_;
+      }
+      if(!edit_petit.description_.empty()) {
+        description = edit_petit.description_;
+      }
+      if(!edit_petit.author_.empty()) {
+        author = edit_petit.author_;
+      }
+      if(!edit_petit.author_uid_.empty()) {
+        author_uid = edit_petit.author_uid_;
+      }
+      if(!edit_petit.date_.empty()) {
+        date = edit_petit.date_;
+      }
+      if(!edit_petit.nSigns_.empty()) {
+        nSigns = edit_petit.nSigns_;
+      }
+      if(!edit_petit.tags_.empty()) {
+        tags = edit_petit.tags_;
+      }
+      line = pid + ";" + title + ";" + description + ";" + author + ";" + author_uid + ";" + date + ";" + nSigns + ";" + tags;      
+      found = true;
+      result_ = true;
+      data_ = "edited";
+    }
+    temp << line << std::endl;
+  }
+  deleteEmptyLinesFile("temp.txt");
+  temp.close();
+  file_.close();
+  remove(petitions_database.c_str());
+  rename("temp.txt", petitions_database.c_str());
+  remove("temp.txt");
 
-  std::getline(ss, segment, ';');
-  uid = segment;
-  std::getline(ss, segment, ';');
-  name = segment;
-  std::getline(ss, segment, ';');
-  email = segment;
-  std::getline(ss, segment, ';');
-  passwd = segment;
-  std::getline(ss, segment, ';');
-  account_type = std::stoi(segment);
-  return user(name, email, passwd, uid, account_type);
+  if(!found) {
+    result_ = false;
+    throw std::invalid_argument("'edit' -> petition ID not found");
+    return;
+  }
 }
