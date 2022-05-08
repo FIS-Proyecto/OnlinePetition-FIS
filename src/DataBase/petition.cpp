@@ -1,7 +1,9 @@
 #include "C:\Users\Rules\Desktop\OnlinePetition-FIS\include\DataBase\db.h"
 
-db::petition::petition() = default;
-db::petition::petition(std::string title,  std::string description, std::string author,
+using namespace db;
+
+petition::petition() = default;
+petition::petition(std::string title,  std::string description, std::string author,
                   std::string author_uid, std::string date, std::string nSigns, Tags tags) : 
                   title_(title),
                   description_(description),
@@ -10,12 +12,9 @@ db::petition::petition(std::string title,  std::string description, std::string 
                   date_(date),
                   nSigns_(nSigns),
                   tags_(tags) {
-                    std::random_device dev;
-                    std::mt19937 rng(dev());
-                    std::uniform_int_distribution<std::mt19937::result_type> dist6(0,4294967295);
-                    pid_ = std::to_string(std::hash<std::string_view>{}(title + std::to_string(dist6(rng))));
+                    pid_ = std::to_string(std::hash<std::string_view>{}(title));
                   }
-db::petition::petition(std::string pid, std::string title,  std::string description, std::string author,
+petition::petition(std::string pid, std::string title,  std::string description, std::string author,
                   std::string author_uid, std::string date, std::string nSigns, Tags tags) : 
                   pid_(pid),
                   title_(title),
@@ -25,3 +24,9 @@ db::petition::petition(std::string pid, std::string title,  std::string descript
                   date_(date),
                   nSigns_(nSigns),
                   tags_(tags) {}
+const std::string& petition::get_pid() const {
+  return pid_;
+}
+void petition::set_pid(const std::string& pid) {
+  pid_ = pid;
+}

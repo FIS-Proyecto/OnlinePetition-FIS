@@ -13,25 +13,25 @@
 
 #include "assert.h"
 
-#define name(new_d)         sp_user(u_options::name,         new_d)
-#define email(new_d)        sp_user(u_options::email,        new_d)
-#define passwd(new_d)       sp_user(u_options::passwd,       new_d)
-#define account_type(new_d) sp_user(u_options::account_type, new_d)
-
-#define pid(new_d)         sp_petition(p_options::pid,          new_d)
-#define title(new_d)       sp_petition(p_options::title,         new_d)
-#define description(new_d) sp_petition(p_options::description,   new_d)
-#define author(new_d)      sp_petition(p_options::author,        new_d)
-#define author_uid(new_d)  sp_petition(p_options::author_uid,    new_d)
-#define date(new_d)        sp_petition(p_options::date,          new_d)
-#define n_signs(new_d)     sp_petition(p_options::n_signs,       new_d)
-#define tags(new_d)        sp_petition(p_options::tags,          new_d)
+#define name(new_d)         sp_user(u_options::name,             new_d)
+#define email(new_d)        sp_user(u_options::email,            new_d)
+#define passwd(new_d)       sp_user(u_options::passwd,           new_d)
+#define account_type(new_d) sp_user(u_options::account_type,     new_d)
+#define pid(new_d)          sp_petition(p_options::pid,          new_d)
+#define title(new_d)        sp_petition(p_options::title,        new_d)
+#define description(new_d)  sp_petition(p_options::description,  new_d)
+#define author(new_d)       sp_petition(p_options::author,       new_d)
+#define author_uid(new_d)   sp_petition(p_options::author_uid,   new_d)
+#define date(new_d)         sp_petition(p_options::date,         new_d)
+#define n_signs(new_d)      sp_petition(p_options::nSigns,       new_d)
+#define tags(new_d)         sp_petition(p_options::tags,         new_d)
 
 enum query_type {
   get,
   add,
   del,
-  edit
+  edit,
+  filter
 };
 
 enum account_t {
@@ -156,12 +156,6 @@ namespace db_edit {
     bool vote;
   };
 
-  struct petition_signature {
-    bool ID;
-    bool petition_ID;
-    bool user_ID;
-  };
-
   struct petition_tag {
     bool ID;
     bool petition_ID;
@@ -222,8 +216,8 @@ namespace db {
       os += ";";
       return os;
     }
-   private:
-    std::string pid_;
+    const std::string& get_pid() const;
+    void set_pid(const std::string& pid);
     std::string title_;
     std::string description_;
     std::string author_;
@@ -231,6 +225,8 @@ namespace db {
     std::string date_;
     std::string nSigns_;
     Tags tags_;
+   private:
+    std::string pid_;
   };
 
   class user {
@@ -255,12 +251,14 @@ namespace db {
       os += std::to_string(u.account_type_);
       return os;
     }
-   private:
-    std::string uid_;
+    const std::string& get_uid() const;
+    void set_uid(const std::string& uid);
     std::string name_;
     std::string passwd_;
     std::string email_;
     size_t account_type_;
+   private:
+    std::string uid_;
   };
 
   class filehandler {
@@ -273,6 +271,7 @@ namespace db {
     ~filehandler();
     bool result_ = false;
     std::string data_;
+    std::vector<std::string> data_vec_;
     
    private:
     std::fstream file_;
@@ -281,18 +280,19 @@ namespace db {
     template<typename Type_>
     void get(std::string ID);
     template<typename Type_>
+    void filter(std::string search);
+    template<typename Type_>
     void add(Type_ data);
     void del(std::string ID, std::string db_name);
     void edit(std::string ID, db_edit::user edit_usr);
     void edit(std::string ID, db_edit::petition edit_petit);
-
-    //tools 
-    // db::user wrapUser(std::string line);
   };
   
   namespace query {
-    user get_user(std::string ID);
-    petition get_petition(std::string ID);
+    const user get_user(std::string ID);
+    const petition get_petition(std::string ID);
+    std::vector<user> filter_user(std::string filter);
+    std::vector<petition> filter_petition(std::string filter);
     // std::string get_petition_comment(std::string ID);
     // size_t get_petition_vote(std::string ID);
     // std::string get_petition_tag(std::string ID);
