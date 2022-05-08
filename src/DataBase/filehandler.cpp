@@ -1,23 +1,17 @@
-#include "/home/julio/Desktop/OnlinePetition-FIS/include/DataBase/db.h"
-// #include "/home/julio/Desktop/OnlinePetition-FIS/include/Logic/tools.h"
+#include "C:\Users\Rules\Desktop\OnlinePetition-FIS\include\DataBase\db.h"
 
 using namespace db;
 
 void deleteEmptyLinesFile(std::string file_path) {
-  std::ifstream file(file_path);
+  std::ifstream in_file("bruh.txt");
+  std::ofstream out_file(file_path);
+
   std::string line;
-  std::ofstream temp_file("empty_lines.txt");
-  while (getline(file, line)) {
-    if(line.empty()) {
-      continue;
+  while (getline(in_file, line)) {
+    if (!line.empty() ) {
+      out_file << line << '\n';
     }
-    temp_file << line << std::endl;
   }
-  temp_file.close();
-  file.close();
-  remove(file_path.c_str());
-  rename("empty_lines.txt", file_path.c_str());
-  remove("empty_lines.txt");
 }
 
 //get user/petition by id
@@ -96,6 +90,7 @@ filehandler::filehandler(query_type qr, user add_usr) {
   }
 
   this->add<db::user>(add_usr);
+  // deleteEmptyLinesFile(users_database);
 }
 
 filehandler::filehandler(query_type qr, petition add_petit) {
@@ -191,7 +186,7 @@ void filehandler::del(std::string ID, std::string db_name) {
     }
     temp << line << std::endl;
   }
-  deleteEmptyLinesFile("temp.txt");
+  // deleteEmptyLinesFile("temp.txt");
   temp.close();
   file_.close();
   remove(db_name.c_str());
@@ -243,7 +238,7 @@ void filehandler::edit(std::string ID, db_edit::user edit_usr) {
     }
     temp << line << std::endl;
   }
-  deleteEmptyLinesFile("temp.txt");
+  // deleteEmptyLinesFile("temp.txt");
   temp.close();
   file_.close();
   remove(users_database.c_str());
@@ -307,7 +302,7 @@ void filehandler::edit(std::string ID, db_edit::petition edit_petit) {
     }
     temp << line << std::endl;
   }
-  deleteEmptyLinesFile("temp.txt");
+  // deleteEmptyLinesFile("temp.txt");
   temp.close();
   file_.close();
   remove(petitions_database.c_str());

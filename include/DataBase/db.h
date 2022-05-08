@@ -9,8 +9,23 @@
 #include <sstream>
 #include <vector>
 #include <fstream>
+#include <random>
 
 #include "assert.h"
+
+#define name(new_d)         sp_user(u_options::name,         new_d)
+#define email(new_d)        sp_user(u_options::email,        new_d)
+#define passwd(new_d)       sp_user(u_options::passwd,       new_d)
+#define account_type(new_d) sp_user(u_options::account_type, new_d)
+
+#define pid(new_d)         sp_petition(p_options::pid,          new_d)
+#define title(new_d)       sp_petition(p_options::title,         new_d)
+#define description(new_d) sp_petition(p_options::description,   new_d)
+#define author(new_d)      sp_petition(p_options::author,        new_d)
+#define author_uid(new_d)  sp_petition(p_options::author_uid,    new_d)
+#define date(new_d)        sp_petition(p_options::date,          new_d)
+#define n_signs(new_d)     sp_petition(p_options::n_signs,       new_d)
+#define tags(new_d)        sp_petition(p_options::tags,          new_d)
 
 enum query_type {
   get,
@@ -167,8 +182,8 @@ typedef std::string Petition;
 typedef std::string Tags;
 
 
-const std::string users_database = "/home/julio/Desktop/OnlinePetition-FIS/doc/users.db";
-const std::string petitions_database = "/home/julio/Desktop/OnlinePetition-FIS/doc/petitions.db";
+const std::string users_database = "C:\\Users\\Rules\\Desktop\\OnlinePetition-FIS\\doc\\users.db";
+const std::string petitions_database = "C:\\Users\\Rules\\Desktop\\OnlinePetition-FIS\\doc\\petitions.db";
 
 namespace db {
   // database classes
