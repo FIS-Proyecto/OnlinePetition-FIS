@@ -14,10 +14,10 @@ void deleteEmptyLinesFile(std::string file_path) {
   }
 }
 
-//get user/petition by id
+//get/del/filter user/petition by a search key
 
-filehandler::filehandler(query_type qr, std::string ID, data_t dt_ty) {
-  if(qr != query_type::get && qr != query_type::del) {
+filehandler::filehandler(query_type qr, std::string key, data_t dt_ty) {
+  if(qr != query_type::get && qr != query_type::del && qr != query_type::filter) {
     throw std::invalid_argument("Invalid action type with incorrect arguments");
     exit(EXIT_SUCCESS);
   }
@@ -29,8 +29,9 @@ filehandler::filehandler(query_type qr, std::string ID, data_t dt_ty) {
       } catch (std::exception e) {
         std::cout << "Error while opening database: " << e.what() << std::endl;
       }
-      if (qr == query_type::get) this->get<db::user>(ID);
-      if (qr == query_type::del) this->del(ID, users_database);
+      if (qr == query_type::get) this->get<db::user>(key);
+      if (qr == query_type::del) this->del(key, users_database);
+      if (qr == query_type::filter) this->filter<db::user>(key);
       break;
     case data_t::petition:
       try {
@@ -38,8 +39,9 @@ filehandler::filehandler(query_type qr, std::string ID, data_t dt_ty) {
       } catch (std::exception e) {
         std::cout << "Error while opening database: " << e.what() << std::endl;
       }
-      if (qr == query_type::get) this->get<db::petition>(ID);
-      if (qr == query_type::del) this->del(ID, petitions_database);
+      if (qr == query_type::get) this->get<db::petition>(key);
+      if (qr == query_type::del) this->del(key, petitions_database);
+      if (qr == query_type::filter) this->filter<db::petition>(key);
       break;
     default:
       throw std::invalid_argument("Invalid data type");
@@ -108,7 +110,6 @@ filehandler::filehandler(query_type qr, petition add_petit) {
   this->add<db::petition>(add_petit);
 }
 
-
 filehandler::~filehandler() {
   file_.close();
 }
@@ -124,7 +125,7 @@ void filehandler::get(std::string ID) {
         return;
       }
     }
-    throw std::invalid_argument("'get' -> user ID '" + ID + "' doesnt exist");
+    throw std::invalid_argument("'get' -> value '" + ID + "' doesnt exist");
   }
   if(typeid(Type_) == typeid(petition)) { 
     while (getline(file_, line)) {
@@ -134,9 +135,32 @@ void filehandler::get(std::string ID) {
         return;
       }
     }
-    throw std::invalid_argument("'get' -> petition ID '" + ID + "' doesnt exist");
+    throw std::invalid_argument("'get' -> value '" + ID + "' doesnt exist");
   }
   data_ = "ERROR";
+  result_ = false;
+}
+
+template<typename Type_>
+void filehandler::filter(std::string search) {
+  std::string line;
+  if(typeid(Type_) == typeid(db::user)) { 
+    while (getline(file_, line)) {
+      if (line.find(search) != std::string::npos) {
+        data_vec_.emplace_back(line);
+        result_ = true;
+      }
+    }
+  }
+  if(typeid(Type_) == typeid(petition)) { 
+    while (getline(file_, line)) {
+      if (line.find(search) != std::string::npos) {
+        data_vec_.emplace_back(line);
+        result_ = true;
+      }
+    }
+  }
+  data_ = "Number of results: " + std::to_string(data_vec_.size());
   result_ = false;
 }
 

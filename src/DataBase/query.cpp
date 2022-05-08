@@ -3,21 +3,21 @@
 
 using namespace db;
 
-db::user query::get_user(std::string ID) {
+const db::user query::get_user(std::string search) {
   db::filehandler fh(
     query_type::get,
-    ID,
+    search,
     data_t::user
   );
   if(fh.result_) {
     return tools::wrapUser(fh.data_);
   }
   else {
-    std::cout << "failed query: 'get_user' with ID: " << ID << '\n';
+    std::cout << "failed query: 'get_user' did not find " << search << '\n';
     return user(fh.data_, fh.data_, fh.data_, fh.data_, SIZE_MAX);
   } 
 }
-db::petition query::get_petition(std::string ID) {
+const db::petition query::get_petition(std::string ID) {
   db::filehandler fh(
     query_type::get,
     ID,
@@ -27,7 +27,7 @@ db::petition query::get_petition(std::string ID) {
     return tools::wrapPetition(fh.data_);
   }
   else {
-    std::cout << "failed query: 'get_petition' with ID: " << ID << '\n';
+    std::cout << "failed query: 'get_petition' did not find " << ID << '\n';
     return petition(fh.data_, fh.data_, fh.data_, fh.data_, fh.data_, fh.data_, fh.data_, fh.data_);
   }
 }
@@ -76,4 +76,29 @@ bool query::edit_petition(std::string ID, db_edit::petition edit_petit) {
     edit_petit
   );
   return fh.result_;
+}
+
+std::vector<db::user> query::filter_user(std::string filter) {
+  db::filehandler fh(
+    query_type::filter,
+    filter,
+    data_t::user
+  );
+  std::vector<db::user> users;
+  for(auto& user : fh.data_vec_) {
+    users.emplace_back(tools::wrapUser(user));
+  }
+  return users;
+}
+std::vector<db::petition> query::filter_petition(std::string filter) {
+  db::filehandler fh(
+    query_type::filter,
+    filter,
+    data_t::petition
+  );
+  std::vector<db::petition> petitions;
+  for(auto& petition : fh.data_vec_) {
+    petitions.emplace_back(tools::wrapPetition(petition));
+  }
+  return petitions;
 }
