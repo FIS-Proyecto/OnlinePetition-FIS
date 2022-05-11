@@ -176,8 +176,10 @@ typedef std::string Petition;
 typedef std::string Tags;
 
 
-const std::string users_database = "C:\\Users\\Rules\\Desktop\\OnlinePetition-FIS\\doc\\users.db";
-const std::string petitions_database = "C:\\Users\\Rules\\Desktop\\OnlinePetition-FIS\\doc\\petitions.db";
+//const std::string users_database = "C:\\Users\\Rules\\Desktop\\OnlinePetition-FIS\\doc\\users.db";
+const std::string users_database = "/home/danielm/Desktop/OnlinePetition-FIS/doc/users.db";
+//const std::string petitions_database = "C:\\Users\\Rules\\Desktop\\OnlinePetition-FIS\\doc\\petitions.db";
+const std::string petitions_database = "/home/danielm/Desktop/OnlinePetition-FIS/doc/petitions.db";
 
 namespace db {
   // database classes

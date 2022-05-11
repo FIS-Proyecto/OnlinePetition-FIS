@@ -1,7 +1,8 @@
 #include <fstream>
 #include <limits>
 
-#include "C:\Users\Rules\Desktop\OnlinePetition-FIS\include\DataBase\db.h"
+// #include "C:\Users\Rules\Desktop\OnlinePetition-FIS\include\DataBase\db.h"
+#include "/home/danielm/Desktop/OnlinePetition-FIS/include/DataBase/db.h"
 
 namespace tools {
   // std::fstream& GotoLine(std::fstream& file, size_t num){
@@ -24,7 +25,7 @@ namespace tools {
     std::getline(ss, passwd, ';');
     std::getline(ss, segment, ';');
     account_type = std::stoi(segment);
-    return db::user(name, email, passwd, uid, account_type);
+    return db::user(uid, name, email, passwd, account_type);
   }
   db::petition wrapPetition(std::string line) {
     std::stringstream ss(line);
