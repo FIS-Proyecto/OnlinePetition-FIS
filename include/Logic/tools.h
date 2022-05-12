@@ -24,7 +24,7 @@ namespace tools {
     std::getline(ss, passwd, ';');
     std::getline(ss, segment, ';');
     account_type = std::stoi(segment);
-    return db::user(name, email, passwd, uid, account_type);
+    return db::user(uid, name, email, passwd, account_type);
   }
   db::petition wrapPetition(std::string line) {
     std::stringstream ss(line);

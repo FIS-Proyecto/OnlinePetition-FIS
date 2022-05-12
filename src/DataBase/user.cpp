@@ -8,7 +8,7 @@ user::user(std::string name, std::string email, std::string passwd, size_t accou
           account_type_(account_type),
           email_(email) {
             uid_ = std::to_string(std::hash<std::string_view>{}(email));
-            passwd_ = std::to_string(std::hash<std::string_view>{}(passwd_ + uid_));
+            passwd_ = std::to_string(std::hash<std::string_view>{}(passwd + uid_));
           }
 user::user(std::string uid, std::string name, std::string email, std::string passwd, size_t account_type) : 
           passwd_(passwd), 
