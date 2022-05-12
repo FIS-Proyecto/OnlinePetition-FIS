@@ -1,8 +1,5 @@
-// #include "C:\Users\Rules\Desktop\OnlinePetition-FIS\include\DataBase\db.h"
-// #include "C:\Users\Rules\Desktop\OnlinePetition-FIS\include\Logic\tools.h"
-
-#include "/home/danielm/Desktop/OnlinePetition-FIS/include/DataBase/db.h"
-#include "/home/danielm/Desktop/OnlinePetition-FIS/include/Logic/tools.h"
+#include "../../include/DataBase/db.h"
+#include "../../include/Logic/tools.h"
 
 
 using namespace db;

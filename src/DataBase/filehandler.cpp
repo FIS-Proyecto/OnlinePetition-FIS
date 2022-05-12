@@ -1,5 +1,4 @@
-//#include "C:\Users\Rules\Desktop\OnlinePetition-FIS\include\DataBase\db.h"
-#include "/home/danielm/Desktop/OnlinePetition-FIS/include/DataBase/db.h"
+#include "../../include/DataBase/db.h"
 
 using namespace db;
 
@@ -22,7 +21,6 @@ filehandler::filehandler(query_type qr, std::string key, data_t dt_ty) {
     throw std::invalid_argument("Invalid action type with incorrect arguments");
     exit(EXIT_SUCCESS);
   }
-
   switch(dt_ty) {
     case data_t::user:
       try {

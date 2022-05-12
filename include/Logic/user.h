@@ -1,6 +1,4 @@
-
 #include <string>
-
 
 namespace account {
   class User {

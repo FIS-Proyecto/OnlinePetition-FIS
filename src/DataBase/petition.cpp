@@ -1,5 +1,4 @@
-//#include "C:\Users\Rules\Desktop\OnlinePetition-FIS\include\DataBase\db.h"
-#include "/home/danielm/Desktop/OnlinePetition-FIS/include/DataBase/db.h"
+#include "../../include/DataBase/db.h"
 
 
 using namespace db;

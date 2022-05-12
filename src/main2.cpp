@@ -1,6 +1,5 @@
-
-#include "/home/danielm/Desktop/OnlinePetition-FIS/include/DataBase/db.h"
-#include "/home/danielm/Desktop/OnlinePetition-FIS/include/Logic/login.h"
+#include "../include/DataBase/db.h"
+#include "../include/Logic/login.h"
 
 int main() {
   /*

@@ -1,6 +1,4 @@
-
-#include "/home/danielm/Desktop/OnlinePetition-FIS/include/Logic/user.h"
-
+#include "../Logic/user.h"
 
 bool login_function(std::string email, std::string passwd, account::User* user);
 

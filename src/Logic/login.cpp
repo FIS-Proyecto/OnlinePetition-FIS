@@ -1,9 +1,7 @@
-
 #include <iostream>
 
-
-#include "/home/danielm/Desktop/OnlinePetition-FIS/include/DataBase/db.h"
-#include "/home/danielm/Desktop/OnlinePetition-FIS/include/Logic/login.h"
+#include "../../include/DataBase/db.h"
+#include "../../include/Logic/login.h"
 
 bool login_function(std::string email, std::string passwd, account::User* user) {
   db::user db_user(db::query::get_user(email));

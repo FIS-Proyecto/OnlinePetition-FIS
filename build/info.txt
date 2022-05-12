@@ -1,2 +1,6 @@
 In this folder will be the current build for the proyect.
 Compile the proyect and save here the executable before making a pull request.
+
+Compile from the working directory with this command: (if u add more .cpp files dont forget to add them)
+
+"g++ .\src\main2.cpp .\src\DataBase\filehandler.cpp .\src\DataBase\petition.cpp .\src\DataBase\query.cpp .\src\DataBase\user.cpp .\src\Logic\login.cpp -std=c++17 -o .\build\out"
