@@ -19,9 +19,7 @@ int main() {
   //   title("new title"),
   // })) ? "edited" : "not edited") << std::endl;
   // std::cout <<  (db::query::del_petition("10938002981203831") ? "deleted" : "not deleted") << std::endl;
-
   // User database options
-
   // db::user new_user("nombre", "nombre@usuario.com", "mi_contraseña", 0);
   // std::cout << (query::add_user(new_user) ? "added" : "not added") << std::endl;
   // std::cout << query::get_user("daniel@admin.com") << std::endl;
@@ -32,8 +30,9 @@ int main() {
   //   account_type("0"),
   // })) ? "edited" : "not edited") << std::endl;
   // std::cout << (query::del_user("1013810798120392") ? "deleted" : "not deleted") << std::endl;
+  for(auto& i : db::query::filter_petition("genero,hambre")) {
+    std::cout << i.title_ << std::endl;
+  }
 
 
-  std::cout << query::get_user("13304574376408418012").email_;
-  std::cout << query::get_petition("10938002981203855").author_;
 }
