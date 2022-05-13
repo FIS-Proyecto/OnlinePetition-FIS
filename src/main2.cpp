@@ -1,5 +1,5 @@
-#include "../include/DataBase/db.h"
-#include "../include/Logic/login.h"
+#include "../include/Interface/menu_register.h"
+#include "../include/Interface/menu_login.h"
 
 int main() {
   /*

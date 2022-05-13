@@ -1,9 +1,8 @@
-#include "../Logic/user.h"
+#ifndef LOGIN_FUNCTION_H
+#define LOGIN_FUNCTION_H
 
-bool login_function(std::string email, std::string passwd, account::User* user);
+#include "user.h"
 
-bool register_function(std::string name, std::string email, std::string passwd);
+bool login_function(std::string email, std::string passwd, account::user* user);
 
-bool menu_login(account::User* user);
-
-bool menu_register();
+#endif // LOGIN_FUNCTION_H

@@ -1,7 +1,7 @@
 #ifndef PETITION_H
 #define PETITION_H
 
-#include "../../include/DataBase/db.h"
+#include "../DataBase/db.h"
 
 namespace block{
   class petition_p {

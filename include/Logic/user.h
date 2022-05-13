@@ -1,30 +1,41 @@
+#ifndef USER_H
+#define USER_H
+
 #include <string>
+#include <iostream>
+
+#include "../DataBase/db.h"
+
+#define ADMIN 1
+#define REGISTERED 0
 
 namespace account {
-  class User {
+  class user {
    public:
-    User() = default;
-    void set_uid(const std::string& uid) { uid_ = uid; }
+    user() = default;
+    user& operator=(const db::user& data_user) {
+      data_ = data_user;
+      return *this;
+    }
+    void set_uid(const std::string& uid) { data_.set_uid(uid); }
     virtual size_t getAccountType() = 0;
-
-    std::string name_;
-    std::string passwd_;
-    std::string email_;
-   private:
-    std::string uid_;
+    
+    db::user data_;
   };
 
-  class Registered : public User {
+  class Registered : public user {
    public:
     size_t getAccountType() { return account_type_; }
    private:
-    size_t account_type_ = 0;
+    const size_t account_type_ = REGISTERED;
   };
 
-  class Admin : public User {
+  class Admin : public user {
    public:
     size_t getAccountType() { return account_type_; }
    private:
-    size_t account_type_ = 1;
+    const size_t account_type_ = ADMIN;
   };
 }
+
+#endif
