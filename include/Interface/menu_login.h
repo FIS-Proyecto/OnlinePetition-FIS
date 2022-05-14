@@ -1,7 +1,8 @@
 #include "../Logic/login.h"
 
-bool menu_login(account::user* user) {
+bool menu_login(account::user* &user) {
   size_t count = 0;
+  std::cout << "<< Logging >>\n\n";
   std::cout << "Email:\n> ";
   std::string email;
   std::cin >> email;

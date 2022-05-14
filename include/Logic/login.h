@@ -4,7 +4,7 @@
 #include "user.h"
 
 
-bool login_function(std::string email, std::string passwd, account::user* user);
+bool login_function(std::string email, std::string passwd, account::user* &user);
 
 
 #endif // __LOGIN__

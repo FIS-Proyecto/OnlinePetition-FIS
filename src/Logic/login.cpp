@@ -4,7 +4,7 @@
 #include "../../include/Logic/login.h"
 
 
-bool login_function(std::string email, std::string passwd, account::user* user) {
+bool login_function(std::string email, std::string passwd, account::user* &user) {
   db::user db_user;
   try {
     db_user = db::query::get_user(email);

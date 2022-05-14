@@ -5,6 +5,7 @@
 
 
 bool menu_register(account::user* &user) {
+  std::cout << "<< Register new user >>\n\n";
   std::string name, email, passwd;
   std::cout << "Name:\n> ";
   std::cin >> name;
