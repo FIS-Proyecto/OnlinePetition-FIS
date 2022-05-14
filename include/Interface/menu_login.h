@@ -12,7 +12,7 @@ bool menu_login(account::user* user) {
   // call login function
   bool login = false;
   while(!login) {
-    if(count == 3) {
+    if(count == 2) {
       std::cout << "Too many tries. Leaving logging page\n";
       return false;
     }

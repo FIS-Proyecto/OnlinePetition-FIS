@@ -4,7 +4,7 @@
 #include "../Logic/buscar.h"
 #define linejump std::cout << "\n"
 
-enum buscar_menu_options {
+enum class search_options {
   NAME,
   TAG,
   SEARCH
@@ -12,19 +12,19 @@ enum buscar_menu_options {
 
 int menu_buscar() {
   int type;
-  std::cout << "Buscar por:" << std::endl;
-  std::cout << "0. Nombre." << std::endl;
-  std::cout << "1. Tag." << std::endl;
-  std::cout << "2. Buscar 5 peticiones.\n>";
+  std::cout << "Search by:" << std::endl;
+  std::cout << "0. Name" << std::endl;
+  std::cout << "1. Tag" << std::endl;
+  std::cout << "2. Search 5 petitions\n>";
   std::cin >> type;
   linejump;
-  buscar_menu_options type_search = static_cast<buscar_menu_options>(type);
+  search_options type_search = static_cast<search_options>(type);
 
   int search_five_controler = 0;
   switch (type_search) {
-  case NAME: {
+  case search_options::NAME: {
     std::string name;
-    std::cout << "Nombre: ";
+    std::cout << "Name: ";
     std::cin >> name;
     linejump;
     std::vector<block::petition_p> petitions = search_petit_by_name(name);
@@ -33,7 +33,7 @@ int menu_buscar() {
     }
   }
     break;
-  case TAG: {
+  case search_options::TAG: {
     std::string tag;
     std::cout << "Tag: ";
     std::cin >> tag;
@@ -44,8 +44,8 @@ int menu_buscar() {
     }
   }
     break;
-  case SEARCH: {
-    std::cout << "5 peticiones: " << std::endl;
+  case search_options::SEARCH: {
+    std::cout << "5 petitions: " << std::endl;
     std::vector<block::petition_p> petitions = show_five_petition(search_five_controler);
     for (auto& i : petitions) {
       std::cout << i.data_.title_ << std::endl;
@@ -53,11 +53,8 @@ int menu_buscar() {
     search_five_controler += 5;
   }
     break;
-  default:
-    break;
   }
   return 0;
 }
 
 #endif // MENU_BUSCAR_H
-

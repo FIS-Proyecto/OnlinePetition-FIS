@@ -1,15 +1,17 @@
-#ifndef USER_H
-#define USER_H
+#ifndef __USER__
+#define __USER__
 
 #include <string>
 #include <iostream>
 
 #include "../DataBase/db.h"
 
-#define ADMIN 1
-#define REGISTERED 0
 
 namespace account {
+  const size_t REGISTERED = 0;
+  const size_t ADMIN = 1;
+  const size_t UNREGISTERED = 2;
+
   class user {
    public:
     user() = default;
@@ -21,6 +23,13 @@ namespace account {
     virtual size_t getAccountType() = 0;
     
     db::user data_;
+  };
+
+  class Unregistered : public user {
+   public:
+    size_t getAccountType() override { return account_type_; }
+   private:
+    const size_t account_type_ = UNREGISTERED;
   };
 
   class Registered : public user {
@@ -38,4 +47,5 @@ namespace account {
   };
 }
 
-#endif
+
+#endif  // __USER__
