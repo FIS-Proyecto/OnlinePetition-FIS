@@ -29,3 +29,7 @@ Información adicional de los participantes:
  - Adrián        (alu0101404813)             Adrian-glz01 
  - Daniel        (alu0101391793)             danielmdzrgz
  - Julio         (alu0101237053)             cracksuxer
+
+
+En la carpeta `build` encontrara las releases actuales
+Para compilar el codigo use la informacion que se haya build/info.txt
