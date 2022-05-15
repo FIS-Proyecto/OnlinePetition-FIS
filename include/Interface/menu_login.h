@@ -25,7 +25,7 @@ bool menu_login(account::user* &user) {
     login = login_function(email, passwd, user);
     if(!login) {
       count++;
-      std::cout << "Error: Login failed. Try again...\n";
+      std::cout << "Error: Login failed. Try again...\n\n";
       std::cout << "Email:\n> ";
       std::cin >> email;
       std::cout << "Password:\n> ";

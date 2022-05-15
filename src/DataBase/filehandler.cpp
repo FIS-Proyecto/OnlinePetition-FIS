@@ -159,8 +159,10 @@ void filehandler::filter(std::string search) {
       }
     }
   }
-  data_ = "Number of results: " + std::to_string(data_vec_.size());
-  result_ = false;
+  data_ = std::to_string(data_vec_.size());
+  if(data_vec_.size() == 0) {
+    result_ = false;
+  }
 }
 
 template<typename Type_>

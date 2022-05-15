@@ -340,9 +340,6 @@ namespace db {
     std::vector<user> filter_user(std::string filter);
     // Query handler for filtering petitions from the database
     std::vector<petition> filter_petition(std::string filter);
-          // std::string get_petition_comment(std::string ID);
-          // size_t get_petition_vote(std::string ID);
-          // std::string get_petition_tag(std::string ID);
     // Query handler for adding a user to the database
     bool add_user(db::user add_usr);
     // Query handler for adding a petition to the database

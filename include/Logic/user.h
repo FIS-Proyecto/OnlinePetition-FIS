@@ -26,6 +26,11 @@ namespace account {
   // Unregistered class that contains the user data
   class Unregistered : public user {
    public:
+    Unregistered() {
+      data_.set_uid("");
+      data_.passwd_ = "";
+      data_.account_type_ = UNREGISTERED;
+    }
     size_t getAccountType() override { return account_type_; }
    private:
     const size_t account_type_ = UNREGISTERED;
@@ -33,6 +38,9 @@ namespace account {
   // Registered class that contains the user data
   class Registered : public user {
    public:
+    Registered() {
+      data_.account_type_ = REGISTERED;
+    }
     size_t getAccountType() { return account_type_; }
    private:
     const size_t account_type_ = REGISTERED;
@@ -40,6 +48,9 @@ namespace account {
   // Admin class that contains the user data
   class Admin : public user {
    public:
+    Admin() {
+      data_.account_type_ = ADMIN;
+    }
     size_t getAccountType() { return account_type_; }
    private:
     const size_t account_type_ = ADMIN;
