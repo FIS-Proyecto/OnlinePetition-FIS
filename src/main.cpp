@@ -39,7 +39,7 @@ int main() {
         return 0;
       case REGISTER: {
         if (user->getAccountType() == account::ADMIN) {
-          std::cout << Color::BG_RED << "\nYou are an admin. You can't register\n\n" << Color::BG_DEFAULT;
+          std::cout << Color::BG_RED << "\nYou are an admin. You can't register\n\n" + Color::BG_DEFAULT;
           break;
         }
         else if (user->getAccountType() == account::REGISTERED) {
@@ -49,7 +49,7 @@ int main() {
         else {
           clear_screen();
           if (menu_register(user)) {
-            std::cout << Color::BG_GREEN << "\nRegister successful\n\n" << Color::BG_DEFAULT;
+            std::cout << Color::BG_GREEN << "\nRegister successful\n\n\033[0m";
           }
           else {
             std::cout << Color::BG_RED << "\nRegister failed\n\n" << Color::BG_DEFAULT;

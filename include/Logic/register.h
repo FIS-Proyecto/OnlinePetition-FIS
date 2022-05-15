@@ -6,6 +6,7 @@
 #include "user.h"
 #include "../DataBase/db.h"
 
+// Register function that returns if the user has been registered successfully
 
 bool register_function(std::string name, std::string email, std::string passwd, account::user* &user) {
   db::user new_user(name, email, passwd, 0);

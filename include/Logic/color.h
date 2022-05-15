@@ -1,5 +1,6 @@
 #include "iostream"
 
+// Color namespace for terminar coloring
 namespace Color {
     enum Code {
       FG_BLACK = 30, 

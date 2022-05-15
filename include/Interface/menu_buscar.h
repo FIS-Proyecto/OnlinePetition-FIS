@@ -4,12 +4,14 @@
 #include "../Logic/buscar.h"
 #define linejump std::cout << "\n"
 
+// Search options for the user input
 enum class search_options {
   NAME,
   TAG,
   SEARCH
 };
 
+// Menu function that returns a variety of petitions base on the user's input
 int menu_buscar() {
   int type;
   std::cout << "Search by:" << std::endl;

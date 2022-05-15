@@ -3,6 +3,9 @@
 
 #include "../DataBase/db.h"
 
+
+// Tools for databse proper functioning
+
 namespace tools {
   // std::fstream& GotoLine(std::fstream& file, size_t num){
   //   file.seekg(std::ios::beg);

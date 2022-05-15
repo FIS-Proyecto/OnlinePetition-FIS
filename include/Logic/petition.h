@@ -3,6 +3,8 @@
 
 #include "../DataBase/db.h"
 
+// Petition class that contains the petition data
+
 namespace block{
   class petition_p {
    public:

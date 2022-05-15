@@ -1,5 +1,7 @@
 #include "../Logic/login.h"
 
+
+// Login menu function for logging in the user
 bool menu_login(account::user* &user) {
   size_t count = 0;
   std::cout << "<< Logging >>\n\n";

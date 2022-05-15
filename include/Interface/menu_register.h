@@ -3,7 +3,7 @@
 
 #include "../Logic/register.h"
 
-
+// Menu register function that registers a user into the database
 bool menu_register(account::user* &user) {
   std::cout << "<< Register new user >>\n\n";
   std::string name, email, passwd;
