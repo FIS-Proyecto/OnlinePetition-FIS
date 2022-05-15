@@ -1,7 +1,10 @@
 #include <fstream>
 #include <limits>
 
-#include "C:\Users\Rules\Desktop\OnlinePetition-FIS\include\DataBase\db.h"
+#include "../DataBase/db.h"
+
+
+// Tools for databse proper functioning
 
 namespace tools {
   // std::fstream& GotoLine(std::fstream& file, size_t num){
