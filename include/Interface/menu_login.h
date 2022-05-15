@@ -1,3 +1,6 @@
+#ifndef __MENU_LOGIN__
+#define __MENU_LOGIN__
+
 #include "../Logic/login.h"
 
 
@@ -8,7 +11,7 @@ bool menu_login(account::user* &user) {
   std::cout << "Email:\n> ";
   std::string email;
   std::cin >> email;
-  std::cout << "Contraseña:\n> ";
+  std::cout << "Password:\n> ";
   std::string passwd;
   std::cin >> passwd;
 
@@ -25,9 +28,12 @@ bool menu_login(account::user* &user) {
       std::cout << "Error: Login failed. Try again...\n";
       std::cout << "Email:\n> ";
       std::cin >> email;
-      std::cout << "Contraseña:\n> ";
+      std::cout << "Password:\n> ";
       std::cin >> passwd;
     }
   }
   return true;
 }
+
+
+#endif  // __MENU_LOGIN__

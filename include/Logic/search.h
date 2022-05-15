@@ -1,11 +1,11 @@
-#ifndef BUSCAR_H
-#define BUSCAR_H
-
-#include "petition.h"
-
+#ifndef __SEARCH__
+#define __SEARCH__
 
 #include <vector>
 // Search function that returns a vector of petitions based on the petition name
+
+#include "petition.h"
+
 std::vector<block::petition_p> search_petit_by_name(const std::string&);
 // Search function that returns a vector of petitions based on the petition tag
 std::vector<block::petition_p> search_petit_by_tag(const std::string&);
@@ -13,4 +13,4 @@ std::vector<block::petition_p> search_petit_by_tag(const std::string&);
 std::vector<block::petition_p> show_five_petition(int);
 
 
-#endif // BUSCAR_H
+#endif // __SEARCH__

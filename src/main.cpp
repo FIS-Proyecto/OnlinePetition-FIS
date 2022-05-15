@@ -3,7 +3,7 @@
 
 #include "../include/Interface/menu_register.h"
 #include "../include/Interface/menu_login.h"
-#include "../include/Interface/menu_buscar.h"
+#include "../include/Interface/menu_search.h"
 #include "../include/Logic/color.h"
 
 #if defined(_WIN32) || defined(_WIN64)
@@ -74,11 +74,11 @@ int main() {
       }
         break;
       case SEARCH: {
-        menu_buscar();
+        menu_search();
       }
         break;
       }
-    std::this_thread::sleep_for(2s);
+    std::this_thread::sleep_for(15s);
     clear_screen();
   }
 

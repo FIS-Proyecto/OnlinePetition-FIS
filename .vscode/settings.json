@@ -74,6 +74,8 @@
     "xutility": "cpp",
     "thread": "cpp",
     "xthread": "cpp",
-    "xhash": "cpp"
+    "xhash": "cpp",
+    "semaphore": "cpp",
+    "stop_token": "cpp"
   }
 }
