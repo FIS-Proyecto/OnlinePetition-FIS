@@ -20,9 +20,11 @@ namespace account {
     }
     void set_uid(const std::string& uid) { data_.set_uid(uid); }
     virtual size_t getAccountType() = 0;
+    virtual bool delete_petition() = 0;
     
     db::user data_;
   };
+
   // Unregistered class that contains the user data
   class Unregistered : public user {
    public:
@@ -32,9 +34,14 @@ namespace account {
       data_.account_type_ = UNREGISTERED;
     }
     size_t getAccountType() override { return account_type_; }
+    bool delete_petition() override { 
+      std::cout << "You must be logged in to delete petitions\n";
+      return false; 
+    }
    private:
     const size_t account_type_ = UNREGISTERED;
   };
+
   // Registered class that contains the user data
   class Registered : public user {
    public:
@@ -42,9 +49,11 @@ namespace account {
       data_.account_type_ = REGISTERED;
     }
     size_t getAccountType() { return account_type_; }
+    bool delete_petition() override { return true; }
    private:
     const size_t account_type_ = REGISTERED;
   };
+
   // Admin class that contains the user data
   class Admin : public user {
    public:
@@ -52,6 +61,7 @@ namespace account {
       data_.account_type_ = ADMIN;
     }
     size_t getAccountType() { return account_type_; }
+    bool delete_petition() override { return true; }
    private:
     const size_t account_type_ = ADMIN;
   };

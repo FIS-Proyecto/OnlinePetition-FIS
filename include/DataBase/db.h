@@ -227,9 +227,9 @@ namespace db {
       os += ";";
       os += p.author_uid_;
       os += ";";
-      os += p.nSigns_;
-      os += ";";
       os += p.date_;
+      os += ";";
+      os += p.nSigns_;
       os += ";";
       os += p.tags_;
       os += ";";

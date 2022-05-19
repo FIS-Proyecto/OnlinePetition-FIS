@@ -292,8 +292,8 @@ void filehandler::edit(std::string ID, db_edit::petition edit_petit) {
       std::getline(search_ss, description, ';');
       std::getline(search_ss, author, ';');
       std::getline(search_ss, author_uid, ';');
-      std::getline(search_ss, date, ';');
       std::getline(search_ss, nSigns, ';');
+      std::getline(search_ss, date, ';');
       std::getline(search_ss, tags, ';');
 
       if(!edit_petit.pid_.empty()) {

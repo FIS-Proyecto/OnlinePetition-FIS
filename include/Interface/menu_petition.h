@@ -23,7 +23,7 @@ enum class petition_options {
 
 void menu_petition(block::petition_p& petition, account::user* &user) {
   int option;
-  std::cout << "<<<" + petition.data_.title_ + " actions >>\n\n";
+  std::cout << "<< " + petition.data_.title_ + " actions >>\n\n";
   std::cout << "0. Sign petition\n";
   std::cout << "1. Edit petition\n";
   std::cout << "2. Delete petition\n";
@@ -35,11 +35,11 @@ void menu_petition(block::petition_p& petition, account::user* &user) {
   case petition_options::SIGN:
     if (user->getAccountType() == account::UNREGISTERED) {
       std::cout << "\nYou must be logged in to sign petitions\n\n";
-      std::this_thread::sleep_for(3s);
+      std::this_thread::sleep_for(2s);
       clear_screen();
       if (menu_login(user)) {
         sign_petit(petition);
-        std::cout << "Petition signed successfully\n";
+        std::cout << "\nPetition signed successfully\n";
       }
       else {
         return;

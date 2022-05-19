@@ -38,8 +38,8 @@ namespace tools {
     std::getline(ss, description, ';');
     std::getline(ss, author, ';');
     std::getline(ss, author_uid, ';');
-    std::getline(ss, date, ';');
     std::getline(ss, nSigns, ';');
+    std::getline(ss, date, ';');
     std::getline(ss, tags, ';');
     return db::petition(pid, title, description, author, author_uid, date, nSigns, tags);
   }

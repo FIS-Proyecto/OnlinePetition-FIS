@@ -3,9 +3,8 @@
 
 #include "../DataBase/db.h"
 
-// Petition class that contains the petition data
-
 namespace block{
+  // Petition class that contains the petition data
   class petition_p {
    public:
     petition_p();
@@ -13,7 +12,7 @@ namespace block{
       data_ = data;
     }
     friend std::ostream& operator<<(std::ostream& os, const petition_p& petition) {
-      os << petition.data_.title_ << "\t\tMade by: " << petition.data_.author_ << "\tTags: " << petition.data_.tags_ << "\n\n";
+      os << petition.data_.title_ << "\t\tMade by: " << petition.data_.author_ << "\t\tTags: " << petition.data_.tags_ << "\n\n";
       std::stringstream ss_desc(petition.data_.description_);
       std::string word, line, final_line;
       size_t space_count = 0;

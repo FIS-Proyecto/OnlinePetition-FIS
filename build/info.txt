@@ -4,8 +4,8 @@ Compile the proyect and save here the executable before making a pull request.
 Compile from the working directory with this command: (if u add more .cpp files dont forget to add them)
 
 For windows
-"g++ .\src\main.cpp .\src\DataBase\filehandler.cpp .\src\DataBase\petition.cpp .\src\DataBase\query.cpp .\src\DataBase\user.cpp .\src\Logic\login.cpp .\src\Logic\search.cpp -std=c++17 -o .\build\out"
+"g++ .\src\main.cpp .\src\DataBase\filehandler.cpp .\src\DataBase\petition.cpp .\src\DataBase\query.cpp .\src\DataBase\user.cpp .\src\Logic\search.cpp -std=c++17 -o .\build\out"
 
 
 For linux
-"g++ ./src/main.cpp ./src/DataBase/filehandler.cpp ./src/DataBase/petition.cpp ./src/DataBase/query.cpp ./src/DataBase/user.cpp ./src/Logic/login.cpp ./src/Logic/search.cpp -std=c++17 -o ./build/out"
+g++ ./src/main.cpp ./src/DataBase/filehandler.cpp ./src/DataBase/petition.cpp ./src/DataBase/query.cpp ./src/DataBase/user.cpp ./src/Logic/search.cpp -std=c++20 -o ./build/out
