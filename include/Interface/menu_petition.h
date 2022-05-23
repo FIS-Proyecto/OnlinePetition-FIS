@@ -1,9 +1,9 @@
 #ifndef __MENU_SIGN__
 #define __MENU_SIGN__
 
+#include "../Logic/petition.h"
 #include "../Logic/sign.h"
 #include "../Logic/user.h"
-#include "../Logic/petition.h"
 #include "menu_login.h"
 
 #if defined(_WIN32) || defined(_WIN64)
@@ -54,7 +54,24 @@ void menu_petition(block::petition_p& petition, account::user* &user) {
     std::cout << "Not implemented yet\n";
     break;
   case petition_options::DELETE:
-    std::cout << "Not implemented yet\n";
+    if (user->getAccountType() != account::UNREGISTERED) {
+      if (user->getAccountType() == account::REGISTERED && user->data_.get_uid() != petition.data_.author_uid_) {
+        std::cout << "\nOnly the author can delete the petition\n";
+        std::cout << "Cancelling petition deletion...\n\n";
+        std::this_thread::sleep_for(2s);
+        return;
+      }
+      try {
+        db::query::del_petition(petition.data_.get_pid());
+      }
+      catch (std::invalid_argument& e) {
+        // std::cerr << e.what() << std::endl;
+        std::cout << "\nCould not delete petition\n\n";
+        std::this_thread::sleep_for(2s);
+        return;
+      }
+      std::cout << "\nPetition deleted successfully\n\n";
+    }
     break;
   case petition_options::BACK:
     return;

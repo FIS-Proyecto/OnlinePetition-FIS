@@ -25,8 +25,8 @@ void menu_create(account::user* user) {
     std::this_thread::sleep_for(std::chrono::milliseconds(2000));
     return;
   }
-  std::this_thread::sleep_for(std::chrono::milliseconds(2000));
   std::cout << "\nPetition created successfully\n\n";
+  std::this_thread::sleep_for(std::chrono::milliseconds(2000));
 }
 
 
