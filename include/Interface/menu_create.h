@@ -29,5 +29,4 @@ void menu_create(account::user* user) {
   std::this_thread::sleep_for(std::chrono::milliseconds(2000));
 }
 
-
 #endif // __MENU_CREATE__

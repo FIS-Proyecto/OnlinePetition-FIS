@@ -1,6 +1,7 @@
 #ifndef __MENU_SIGN__
 #define __MENU_SIGN__
 
+#include "../Logic/edit.h"
 #include "../Logic/petition.h"
 #include "../Logic/sign.h"
 #include "../Logic/user.h"
@@ -51,27 +52,59 @@ void menu_petition(block::petition_p& petition, account::user* &user) {
     }
     break;
   case petition_options::EDIT:
-    std::cout << "Not implemented yet\n";
+    if (user->getAccountType() == account::UNREGISTERED) {
+      std::cout << "\nYou must be logged in to edit petitions\n\n";
+      std::this_thread::sleep_for(2s);
+      clear_screen();
+      if (!menu_login(user)) {
+        return;
+      } 
+    }
+    if (user->getAccountType() == account::REGISTERED && user->data_.get_uid() != petition.data_.author_uid_) {
+      std::cout << "\nYou are not the author of this petition, you can not edit it\n\n";
+      std::cout << "Cancelling petition edition...\n\n";
+      std::this_thread::sleep_for(2s);
+      clear_screen();
+      return;
+    }
+    try {
+      edit_petit(petition);
+    }
+    catch (std::invalid_argument& e) {
+      // std::cerr << e.what() << std::endl;
+      std::cout << "\nCould not edit petition\n\n";
+      std::this_thread::sleep_for(2s);
+      clear_screen();
+      return;
+    }
     break;
   case petition_options::DELETE:
-    if (user->getAccountType() != account::UNREGISTERED) {
-      if (user->getAccountType() == account::REGISTERED && user->data_.get_uid() != petition.data_.author_uid_) {
-        std::cout << "\nOnly the author can delete the petition\n";
-        std::cout << "Cancelling petition deletion...\n\n";
-        std::this_thread::sleep_for(2s);
+    if (user->getAccountType() == account::UNREGISTERED) {
+      std::cout << "\nYou must be logged in to delete petitions\n\n";
+      std::this_thread::sleep_for(2s);
+      clear_screen();
+      if (!menu_login(user)) {
         return;
-      }
-      try {
-        db::query::del_petition(petition.data_.get_pid());
-      }
-      catch (std::invalid_argument& e) {
-        // std::cerr << e.what() << std::endl;
-        std::cout << "\nCould not delete petition\n\n";
-        std::this_thread::sleep_for(2s);
-        return;
-      }
-      std::cout << "\nPetition deleted successfully\n\n";
+      } 
     }
+    if (user->getAccountType() == account::REGISTERED && user->data_.get_uid() != petition.data_.author_uid_) {
+      std::cout << "\nOnly the author can delete the petition\n\n";
+      std::cout << "Cancelling petition deletion...\n\n";
+      std::this_thread::sleep_for(2s);
+      clear_screen();
+      return;
+    }
+    try {
+      db::query::del_petition(petition.data_.get_pid());
+    }
+    catch (std::invalid_argument& e) {
+      // std::cerr << e.what() << std::endl;
+      std::cout << "\nCould not delete petition\n\n";
+      std::this_thread::sleep_for(2s);
+      clear_screen();
+      return;
+    }
+    std::cout << "\nPetition deleted successfully\n\n";
     break;
   case petition_options::BACK:
     return;

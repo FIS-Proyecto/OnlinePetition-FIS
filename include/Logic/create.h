@@ -27,5 +27,4 @@ void create_petit(account::user* user, const std::string& title, const std::stri
   db::query::add_petition(new_petition);
 }
 
-
 #endif  // __CREATE__

@@ -34,5 +34,4 @@ bool menu_login(account::user* &user) {
   return true;
 }
 
-
 #endif  // __MENU_LOGIN__

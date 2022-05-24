@@ -68,5 +68,4 @@ bool menu_search(std::vector<block::petition_p> &petitions) {
   return true;
 }
 
-
 #endif // __MENU_SEARCH__

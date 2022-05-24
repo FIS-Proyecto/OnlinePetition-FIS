@@ -17,5 +17,4 @@ bool menu_register(account::user* &user) {
   return register_function(name, email, passwd, user); 
 }
 
-
 #endif // __MENU_REGISTER__
