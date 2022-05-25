@@ -88,7 +88,7 @@ int main() {
       case SEARCH: {
         clear_screen();
         std::vector<block::petition_p> petitions;
-        if(!menu_search(petitions)) break;
+        if(!menu_search(petitions,user)) break;
         size_t option;
         std::string title;
         std::cout << "\n\nOptions:\n"

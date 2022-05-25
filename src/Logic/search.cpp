@@ -1,5 +1,8 @@
+
+
 #include "../../include/DataBase/db.h"
 #include "../../include/Logic/search.h"
+#include "../../include/Logic/user.h"
 
 // Made by Adrian, ask him if you have any questions.
 std::vector<block::petition_p> search_petit_by_name(const std::string& name) {
@@ -37,4 +40,12 @@ std::vector<block::petition_p> show_five_petition(int n) {
     i++;
   }
   return returned_petitions_vec_aux;
+}
+
+std::vector<block::petition_p> search_owner_petition(account::user* user) {
+  std::vector<block::petition_p> returned_petitions_vec;
+  for(auto& i : db::query::filter_petition(user->data_.get_uid())) {
+    returned_petitions_vec.emplace_back(block::petition_p(i));
+  }
+  return returned_petitions_vec;
 }

@@ -5,6 +5,7 @@
 #include "../Logic/petition.h"
 #include "../Logic/sign.h"
 #include "../Logic/user.h"
+#include "../Logic/search.h"
 #include "menu_login.h"
 
 #if defined(_WIN32) || defined(_WIN64)
@@ -28,7 +29,7 @@ void menu_petition(block::petition_p& petition, account::user* &user) {
   std::cout << "0. Sign petition\n";
   std::cout << "1. Edit petition\n";
   std::cout << "2. Delete petition\n";
-  std::cout << "3. Back\n> ";
+  std::cout << "4. Back\n> ";
   std::cin >> option;
 
   petition_options petition_opt = static_cast<petition_options>(option);

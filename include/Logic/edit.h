@@ -67,7 +67,7 @@ void edit_petit(block::petition_p& petition) {
       return;
       break;
     }
-    std::this_thread::sleep_for(2s);
+    //std::this_thread::sleep_for(2s);
     clear_screen();
   }
   return;
