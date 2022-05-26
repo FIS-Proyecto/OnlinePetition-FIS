@@ -320,7 +320,7 @@ void filehandler::edit(std::string ID, db_edit::petition edit_petit) {
       if(!edit_petit.tags_.empty()) {
         tags = edit_petit.tags_;
       }
-      line = pid + ";" + title + ";" + description + ";" + author + ";" + author_uid + ";" + date + ";" + nSigns + ";" + tags;      
+      line = pid + ";" + title + ";" + description + ";" + author + ";" + author_uid + ";" + nSigns + ";" + date + ";" + tags;      
       found = true;
       result_ = true;
       data_ = "edited";

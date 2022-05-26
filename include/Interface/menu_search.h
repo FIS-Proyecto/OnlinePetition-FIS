@@ -14,7 +14,7 @@ enum class search_options {
 };
 
 // Menu function that returns a variety of petitions base on the user's input
-bool menu_search(std::vector<block::petition_p> &petitions, account::user* user) {
+bool menu_search(std::vector<block::petition_p> &petitions, account::user* &user) {
   int type;
   std::cout << "Search by:" << std::endl;
   std::cout << "0. Name" << std::endl;
@@ -78,15 +78,16 @@ bool menu_search(std::vector<block::petition_p> &petitions, account::user* user)
       } 
     } 
     try{
-      std::vector<block::petition_p> petitions = search_owner_petition(user);
+      petitions = search_owner_petition(user);
       if(petitions.size() == 0) {
-      std::cout << "\nNo petitions found\n\n";
-      break;;
+        std::cout << "\nNo petitions found\n\n";
+        break;
       }
       for (auto& petition : petitions) {
       std::cout << "\n\n" << petition;
       }
-    } catch (std::invalid_argument& e) {
+    } 
+    catch (std::invalid_argument& e) {
       std::cout << "\nCould not find petitions\n\n";
       std::this_thread::sleep_for(2s);
       clear_screen();
